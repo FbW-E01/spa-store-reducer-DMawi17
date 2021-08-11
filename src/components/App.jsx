@@ -1,10 +1,10 @@
-import { useState, useReducer } from "react";
+import { useState } from "react";
 import "./App.css";
 
 function App() {
     const [gear, setGear] = useState(0);
     const [speed, setSpeed] = useState(0);
-    const [start, setStart] = useState(false);
+    const [start, setStart] = useState();
     //..
 
     const startTheBoat = () => {
@@ -27,7 +27,7 @@ function App() {
     function speedDown() {
         gear && start ? setSpeed((initSpeed) => initSpeed - 1) : speed;
     }
-    
+
     function stopTheBoat() {
         setGear(() => 0);
     }
