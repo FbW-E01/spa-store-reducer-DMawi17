@@ -1,6 +1,15 @@
 import { useReducer } from "react";
 import "./App.css";
 
+const ACTIONS = {
+    START: "startTheBoat",
+    SHIFT_DOWN: "gearUp",
+    SHIFT_UP: "gearDown",
+    ACCELERATE: "speedUp",
+    BREAK: "speedDown",
+    STOP: "stopTheBoat",
+};
+
 const myBoat = {
     gear: 0,
     speed: 0,
@@ -9,7 +18,7 @@ const myBoat = {
 
 function reducer(state, action) {
     switch (action.type) {
-        case "startTheBoat":
+        case ACTIONS.START:
             return (
                 Math.floor(Math.random() * 10) > 5
                     ? { state: !state.start }
@@ -17,23 +26,26 @@ function reducer(state, action) {
                 { state: state.start }
             );
 
-        case "gearUp":
+        case ACTIONS.SHIFT_DOWN:
             return state.start && state.gear < 5
                 ? { gear: state.gear + 1 }
                 : { gear: state.gear };
-        case "gearDown":
+
+        case ACTIONS.SHIFT_UP:
             return state.start && state.gear > -2
                 ? { gear: state.gear - 1 }
                 : { gear: state.gear };
-        case "speedUp":
+
+        case ACTIONS.ACCELERATE:
             return state.gear && state.start
                 ? { speed: state.speed + 1 }
                 : { speed: state.speed };
-        case "speedDown":
+
+        case ACTIONS.BREAK:
             return state.gear && state.start
                 ? { speed: state.speed - 1 }
                 : { speed: state.speed };
-        case "stopTheBoat":
+        case ACTIONS.STOP:
             return state;
     }
 }
@@ -41,32 +53,30 @@ function reducer(state, action) {
 function App() {
     const [state, dispatch] = useReducer(reducer, myBoat);
 
-    //..
-
     const startTheBoat = () => {
-        dispatch({ type: "startTheBoat" });
+        dispatch({ type: ACTIONS.START });
     };
 
     function gearUp() {
-        dispatch({ type: "gearUp" });
+        dispatch({ type: ACTIONS.SHIFT_DOWN });
     }
 
     function gearDown() {
-        dispatch({ type: "gearDown" });
+        dispatch({ type: ACTIONS.SHIFT_UP });
     }
 
     function speedUp() {
-        dispatch({ type: "speedUp" });
+        dispatch({ type: ACTIONS.ACCELERATE });
     }
 
     function speedDown() {
-        dispatch({ type: "speedDown" });
+        dispatch({ type: ACTIONS.BREAK });
     }
 
     function stopTheBoat() {
-        dispatch({ type: "stopTheBoat" });
+        dispatch({ type: ACTIONS.STOP });
     }
-    //..
+
     return (
         <div className="App">
             <button onClick={startTheBoat}>Start</button>
